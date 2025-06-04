@@ -1,0 +1,6 @@
+[build]
+  command = "chmod +x generate-env.sh && ./generate-env.sh"
+  publish = "."
+
+[build.environment]
+  NODE_VERSION = "18"

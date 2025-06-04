@@ -57,6 +57,12 @@ build/
 # Firebase config (if contains sensitive data)
 firebase-config.js
 
+# Generated environment config
+env-config.js
+
+# Build scripts
+generate-env.sh
+
 # Backup files
 *.backup
 *.bak
