@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Peak-Performance Free Diving</title>
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:700&display=swap" rel="stylesheet">
+
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+</head>
+<body>
+<header>
+  <nav>
+    <div class="logo">Peak-Performance</div>
+    <ul>
+      <li><a href="#home">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#training">Training</a></li>
+      <li class="auth-section">
+        <div id="user-info" class="user-info" style="display: none;"></div>
+        <button id="login-btn" class="btn">Login</button>
+        <button id="logout-btn" class="btn btn-danger" style="display: none;">Logout</button>
+        <button id="admin-btn" class="btn" style="display: none;">Admin Panel</button>
+      </li>
+    </ul>
+  </nav>
+</header>
+
+<main>
+  <section id="home" class="hero">
+    <h1>Welcome to Peak-Performance</h1>
+    <p>Elite freediving training in Mediterranean Sea and Eilat</p>
+    <a href="#training" class="cta-button">View Training Sessions</a>
+  </section>
+
+  <section id="about" class="about">
+    <h2>About</h2>
+    <p>I am an experienced free diving instructor, providing personal and professional guidance for both beginners and advanced divers. Join our training sessions in the beautiful Mediterranean Sea or the crystal-clear waters of Eilat.</p>
+  </section>
+
+  <!-- Training Sessions Section -->
+  <section id="training" class="training">
+    <h2>Training Sessions</h2>
+
+    <!-- Mediterranean Sea Training -->
+    <div class="training-section">
+      <h3 class="location-header">Mediterranean Sea Training</h3>
+      <div id="mediterranean-forms" class="forms-container">
+        <!-- Mediterranean forms will be populated here -->
+      </div>
+    </div>
+
+    <!-- Eilat Training -->
+    <div class="training-section">
+      <h3 class="location-header">Eilat Training</h3>
+      <div id="eilat-forms" class="forms-container">
+        <!-- Eilat forms will be populated here -->
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- Login Modal -->
+<div id="login-modal" class="modal">
+  <div class="modal-content">
+    <span class="close-modal">&times;</span>
+    <h2>Login / Register</h2>
+
+    <div class="auth-tabs">
+      <button class="tab-btn active" data-tab="login">Login</button>
+      <button class="tab-btn" data-tab="register">Register</button>
+    </div>
+
+    <div id="login-tab" class="tab-content active">
+      <form id="login-form">
+        <div class="form-group">
+          <label for="login-email">Email:</label>
+          <input type="email" id="login-email" required>
+        </div>
+        <div class="form-group">
+          <label for="login-password">Password:</label>
+          <input type="password" id="login-password" required>
+        </div>
+        <button type="submit" class="btn">Login</button>
+      </form>
+    </div>
+
+    <div id="register-tab" class="tab-content">
+      <form id="register-form">
+        <div class="form-group">
+          <label for="register-name">Full Name:</label>
+          <input type="text" id="register-name" required>
+        </div>
+        <div class="form-group">
+          <label for="register-email">Email:</label>
+          <input type="email" id="register-email" required>
+        </div>
+        <div class="form-group">
+          <label for="register-password">Password:</label>
+          <input type="password" id="register-password" required>
+        </div>
+        <button type="submit" class="btn">Register</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Admin Panel Modal -->
+<div id="admin-modal" class="modal">
+  <div class="modal-content admin-modal-content">
+    <span class="close-modal">&times;</span>
+    <h2>Admin Panel</h2>
+
+    <div class="admin-tabs">
+      <button class="tab-btn active" data-tab="forms">Manage Forms</button>
+      <button class="tab-btn" data-tab="divers">Approved Divers</button>
+    </div>
+
+    <div id="forms-tab" class="tab-content active">
+      <div class="add-form-section">
+        <h3>Add New Training Session</h3>
+        <form id="add-form">
+          <div class="form-group">
+            <label for="form-location">Location:</label>
+            <select id="form-location" required>
+              <option value="">Select Location</option>
+              <option value="mediterranean">Mediterranean Sea</option>
+              <option value="eilat">Eilat</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="form-date">Date:</label>
+            <input type="date" id="form-date" required>
+          </div>
+          <button type="submit" class="btn">Add Training Session</button>
+        </form>
+      </div>
+
+      <div class="existing-forms">
+        <h3>Existing Training Sessions</h3>
+        <div id="admin-forms-list">
+          <!-- Existing forms will be listed here -->
+        </div>
+      </div>
+    </div>
+
+    <div id="divers-tab" class="tab-content">
+      <div class="add-diver-section">
+        <h3>Add Approved Diver</h3>
+        <form id="add-diver-form">
+          <div class="form-group">
+            <label for="diver-name">Diver Name:</label>
+            <input type="text" id="diver-name" required>
+          </div>
+          <button type="submit" class="btn">Add Diver</button>
+        </form>
+      </div>
+
+      <div class="approved-divers-list">
+        <h3>Approved Divers</h3>
+        <div id="divers-list">
+          <!-- Approved divers will be listed here -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p>&copy; 2024 Peak-Performance Free Diving. All rights reserved.</p>
+</footer>
+
+<script src="firebase-config.js"></script>
+<script src="script.js"></script>
+</body>
+</html>

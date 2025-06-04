@@ -1,0 +1,29 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Approved divers collection - readable by everyone, only admins can add/remove divers
+    match /approvedDivers/{docId} {
+      allow read: if true; // Everyone can see approved divers list
+      allow create, delete: if request.auth != null; // Only authenticated users can add/remove divers
+    }
+
+    // Training forms collection - readable by everyone, only authenticated users can create/delete
+    match /trainingForms/{docId} {
+      allow read: if true; // Everyone can see training forms
+      allow create, delete: if request.auth != null; // Only authenticated users can create/delete forms
+    }
+
+    // Registrations collection - readable by everyone, anyone can register for vacant spots
+    match /registrations/{docId} {
+      allow read: if true; // Everyone can see current registrations
+      allow create: if true; // Anyone can register for vacant spots
+      allow delete: if request.auth != null; // Only authenticated users can unregister
+    }
+
+    // Contact form submissions - writable by any user, readable by authenticated users
+    match /contacts/{docId} {
+      allow create: if true; // Allow anonymous contact submissions
+      allow read: if request.auth != null;
+    }
+  }
+}
