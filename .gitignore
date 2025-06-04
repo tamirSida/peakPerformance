@@ -54,14 +54,9 @@ build/
 *.tmp
 *.temp
 
-# Firebase config (if contains sensitive data)
-firebase-config.js
+# Firebase config (contains API keys - keep public for client-side app)
+# firebase-config.js
 
-# Generated environment config
-env-config.js
-
-# Build scripts
-generate-env.sh
 
 # Backup files
 *.backup
